@@ -1,0 +1,52 @@
+.modal-container{
+    position: absolute;
+    top: 100px;
+    background-color: #FFF;
+    padding: 14px;
+    width: 700px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    animation: slideY 1.5s;
+}
+
+/* Animação Slide */
+@keyframes slideY {
+    from{
+        transform: translateY(90px);
+        opacity: 0;
+    }
+    to{
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+
+.modal-container .modal-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #C4C4C4;
+}
+
+.modal-container .modal-header button{
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+.modal-container .area-action{
+    width: 100%;
+    max-width: 180px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 8px;
+}
+
+@media (max-width: 720px){
+    .modal-container{
+        width: 90%;
+    }
+}
