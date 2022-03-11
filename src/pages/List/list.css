@@ -1,13 +1,11 @@
 .container{
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     width: 100%;
-    max-width: 800px;
-
-    padding-top: 40px;
-}
+    height: 100vh;
+    padding: 40px 20px
+} 
 
 .container__user{
     background-color: #F5F5F5;
@@ -26,7 +24,7 @@
     align-items: center;
 }
 
-.container__header{
+.container__data{
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -34,7 +32,7 @@
     margin-bottom: 20px;
 }
 
-.container__header h1{
+.container__data h1{
     font-size: 25px;
     display: flex;
     align-items: center;

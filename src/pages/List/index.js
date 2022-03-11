@@ -21,6 +21,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PersonIcon from '@mui/icons-material/Person';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import db from '../../services/firebaseConnection';
 
@@ -33,6 +34,7 @@ export default function List(){
     const [openEditModal, setOpenEditModal] = useState(false);
     const [accounts, setAccounts] = useState([]);
     const [user, setUser] = useState([]);
+    const [currentUser, setCurrentUser] = useState();
     const auth = getAuth();
     const navigate = useNavigate();
 
@@ -45,7 +47,17 @@ export default function List(){
     const [accountId, setAccountId]     = useState('');
     const [toEdit, setToEdit]           = useState('');
 
+    //let userAuth = localStorage.getItem('authentication');
+    //userAuth = JSON.parse(userAuth);
+    //let userAuth = JSON.stringify(auth.currentUser.uid);
+    //userAuth = JSON.parse(userAuth);
+
     useEffect(() => {
+
+        // if(auth.currentUser == null){
+        //     toast.error("Ops, você não está logado!");
+        //     navigate(`/`);
+        // }
 
         const accountsRef = collection(db, "accounts");
 
@@ -61,13 +73,14 @@ export default function List(){
         const userLogin = onSnapshot(doc(db, "users", id), (doc) => {
             setUser(doc.data().nome);
         });
+
     },[]);
 
     async function handleDelete(id){
 
         await deleteDoc(doc(db, 'accounts', id))
           .then(() => {
-            toast.success(`Excluído com sucesso`);
+            toast.success(`Excluído com sucesso!`);
           })
           .catch((error) => {
             toast.error(`Ops ocorreu algum erro ${error}`);
@@ -84,7 +97,7 @@ export default function List(){
             await logout();
             navigate(`/`);
         } catch {
-            alert("Error!");
+            toast.success(`Logout com sucesso!`);
         }
     }
 
@@ -119,7 +132,7 @@ export default function List(){
                 </Button>
             </div>
 
-            <div className="container__header">
+            <div className="container__data">
                 <h1>Dados das contas</h1>
                 <Button variant="contained" onClick={() => setOpenAddModal(true)} startIcon={<AddIcon />}>
                     Adicionar
@@ -127,7 +140,7 @@ export default function List(){
             </div>
             
             <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                <Table sx={{ minWidth: 600 }} aria-label="customized table">
                     <TableHead>
                         <TableRow>
                             <StyledTableCell>Descrição</StyledTableCell>
@@ -141,9 +154,7 @@ export default function List(){
                     </TableHead>
                     <TableBody>
                     {/* {accounts.length <= 0 &&
-                    <div className='loading'>
-                        <img src="https://media.wired.com/photos/592744d3f3e2356fd800bf00/master/w_540,c_limit/Netflix_LoadTime.gif" />
-                    </div>
+                        <CircularProgress />
                     } */}
                     {accounts.map((account) => (
                         <StyledTableRow key={account.id}>

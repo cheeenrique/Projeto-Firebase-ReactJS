@@ -38,7 +38,7 @@ export default function AddList({ onClose, toEditDescricao, toEditCompetencia, t
             created: Timestamp.now()
           })
           .then(() => {
-            toast.success(`Dados cadastrados com sucesso`);
+            toast.success(`Dados cadastrados com sucesso!`);
             onClose();
           })
           .catch((error) => {

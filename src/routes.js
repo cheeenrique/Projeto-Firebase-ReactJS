@@ -5,6 +5,7 @@ import List from './pages/List';
 import Register from './pages/Register';
 import Error from './pages/Error';
 import Header from './components/Header';
+import Footer from './components/Footer';
 
 export default function RoutesApp(){
     return(
@@ -16,6 +17,7 @@ export default function RoutesApp(){
                 <Route exact path="/register/" element={<Register/>}/>
                 <Route path="*" element={<Error/>}/>
             </Routes>
+            <Footer/>
         </BrowserRouter>
     );
 }

@@ -30,7 +30,6 @@ export default function Home(){
     }, [])
     
     async function handleLogin() {
-
         await login(email, password)
           .then((valor) => {
             toast.success("Logado com sucesso!");
@@ -53,11 +52,6 @@ export default function Home(){
         navigate("register/");
     }
 
-    // if(currentUser){
-    //     toast.warning("Você já está logado!");
-    //     navigate(`list/${currentUser?.uid}`);
-    // }
-
     return(
         <div className="container">
             <div className="container__box">
@@ -79,11 +73,11 @@ export default function Home(){
                     />
                     
                     <TextField
-                            id="outlined-password-input"
-                            label="Password"
-                            type="password"
-                            autoComplete="current-password"
-                            onChange={ (e) => setPassword(e.target.value)}
+                        id="outlined-password-input"
+                        label="Password"
+                        type="password"
+                        autoComplete="current-password"
+                        onChange={ (e) => setPassword(e.target.value)}
                     />
                     
                 </Box>

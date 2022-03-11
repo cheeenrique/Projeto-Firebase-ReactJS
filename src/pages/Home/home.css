@@ -9,11 +9,11 @@ a:visited{
 .container{
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     width: 100%;
-    max-width: 800px;
-    padding-top: 40px;
+    max-width: 900px;
+    height: 100vh;
+    padding: 40px 20px
 }
 
 .container__box{
