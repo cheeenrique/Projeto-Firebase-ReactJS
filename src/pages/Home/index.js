@@ -34,6 +34,7 @@ export default function Home(){
           .then((valor) => {
             toast.success("Logado com sucesso!");
             navigate(`list/${valor.user.uid}`);
+            localStorage.setItem('authToken', `${valor.user.uid}`);
           })
           .catch((error) => {
             if(error.code === 'auth/user-not-found'){
@@ -79,18 +80,20 @@ export default function Home(){
                         autoComplete="current-password"
                         onChange={ (e) => setPassword(e.target.value)}
                     />
-                    
+
+                    <div className="area-action">
+                        <Stack spacing={2} direction="row">
+                            <Button variant="contained" color="success" onClick={() => handleLogin()}>
+                                Acessar
+                            </Button>
+                            <Button variant="contained" onClick={()=> handleNavigate()}>
+                                Registrar
+                            </Button>
+                        </Stack>
+                    </div>
+
                 </Box>
-                <div className="area-action">
-                    <Stack spacing={2} direction="row">
-                        <Button variant="contained" color="success" onClick={() => handleLogin()}>
-                            Acessar
-                        </Button>
-                        <Button variant="contained" onClick={()=> handleNavigate()}>
-                            Registrar
-                        </Button>
-                    </Stack>
-                </div>
+                
             </div>
         </div>
     );

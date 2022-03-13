@@ -34,7 +34,7 @@ export default function List(){
     const [openEditModal, setOpenEditModal] = useState(false);
     const [accounts, setAccounts] = useState([]);
     const [user, setUser] = useState([]);
-    const [currentUser, setCurrentUser] = useState();
+    //const [currentUser, setCurrentUser] = useState();
     const auth = getAuth();
     const navigate = useNavigate();
 
@@ -47,20 +47,19 @@ export default function List(){
     const [accountId, setAccountId]     = useState('');
     const [toEdit, setToEdit]           = useState('');
 
-    //let userAuth = localStorage.getItem('authentication');
-    //userAuth = JSON.parse(userAuth);
-    //let userAuth = JSON.stringify(auth.currentUser.uid);
-    //userAuth = JSON.parse(userAuth);
+    useEffect(() => {
+        const validateToken = async () => {
+            const storageData = localStorage.getItem('authToken');
+            if (storageData !== id) {
+                toast.error("Ops, você não está logado!");
+                navigate(`/`);
+            }
+        }
+        validateToken();
+    }, []);
 
     useEffect(() => {
-
-        // if(auth.currentUser == null){
-        //     toast.error("Ops, você não está logado!");
-        //     navigate(`/`);
-        // }
-
         const accountsRef = collection(db, "accounts");
-
         const q = query(accountsRef, where("user", "==", id))
             onSnapshot(q, (querySnapshot) => {
                 setAccounts(querySnapshot.docs.map(doc => ({
@@ -77,7 +76,6 @@ export default function List(){
     },[]);
 
     async function handleDelete(id){
-
         await deleteDoc(doc(db, 'accounts', id))
           .then(() => {
             toast.success(`Excluído com sucesso!`);
@@ -85,19 +83,21 @@ export default function List(){
           .catch((error) => {
             toast.error(`Ops ocorreu algum erro ${error}`);
           })
-
     }
 
     function logout(){
         return signOut(auth);
     }
 
-    async function handleLogout() {
+    function handleLogout() {
         try {
-            await logout();
+            logout();
+            localStorage.removeItem('authToken');
+            toast.success('Logout com sucesso!');
             navigate(`/`);
-        } catch {
-            toast.success(`Logout com sucesso!`);
+        } catch(error) {
+            alert(error);
+            toast.error('Erro ao realizar o logout!');
         }
     }
 
@@ -153,9 +153,6 @@ export default function List(){
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                    {/* {accounts.length <= 0 &&
-                        <CircularProgress />
-                    } */}
                     {accounts.map((account) => (
                         <StyledTableRow key={account.id}>
                             <StyledTableCell component="th" scope="row">{account.data.descricao}</StyledTableCell>
@@ -191,6 +188,10 @@ export default function List(){
                     </TableBody>
                 </Table>
             </TableContainer>
+
+            {accounts.length <= 0 &&
+                <CircularProgress />
+            }
 
             {openAddModal &&
                 <div className="background-full">

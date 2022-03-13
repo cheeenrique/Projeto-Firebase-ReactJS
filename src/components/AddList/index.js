@@ -89,7 +89,7 @@ export default function AddList({ onClose, toEditDescricao, toEditCompetencia, t
             <Box
             component="form"
             sx={{
-                '& > :not(style)': { m: 1, width: '35ch' },
+                '& > :not(style)': { m: 1, width: '47%' },
             }}
             noValidate
             autoComplete="off"
